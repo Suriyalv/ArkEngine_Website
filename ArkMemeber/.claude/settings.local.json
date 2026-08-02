@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm -f \"/c/Users/Suriya LV/Desktop/Translation/ArkMemeber/.claude/launch.json\")",
+      "Bash(rmdir \"/c/Users/Suriya LV/Desktop/Translation/ArkMemeber/.claude\")",
+      "Bash(python -c ' *)"
+    ]
+  }
+}

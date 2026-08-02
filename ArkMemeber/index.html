@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArkEngine — Our Team</title>
+<style>
+  :root {
+    --primary: #0088CC;
+    --primary-light: #33AADD;
+    --primary-dark: #006699;
+    --ink: #f2f2f2;
+    --dim: #97a3ad;
+    --card-bg: #0d1117;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse 900px 500px at 50% 0%, rgba(56,189,248,0.10), transparent 65%),
+      #000000;
+    font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 20px 80px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  header h1 {
+    margin: 0;
+    font-size: 2.2rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  header h1 span {
+    background: linear-gradient(90deg, #38BDF8, #0088CC, #1D4ED8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  header p {
+    margin: 8px 0 0;
+    color: var(--dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+
+  .stage {
+    position: relative;
+    width: 928px;
+    max-width: 100%;
+    height: 460px;
+  }
+
+  .person {
+    position: absolute;
+    bottom: 0;
+    width: 280px;
+    cursor: pointer;
+    transition: transform 0.35s ease, filter 0.35s ease;
+  }
+
+  .person img {
+    width: 100%;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  .person.front {
+    transform: translateY(-8px) scale(1.03);
+    filter: drop-shadow(0 22px 30px rgba(0,136,204,0.35));
+  }
+
+  #p-meganath { left: 40px; z-index: 1; }
+  #p-suriya   { left: 228px; z-index: 3; }
+  #p-dharani  { left: 416px; z-index: 2; }
+  #p-kabhilan { left: 604px; z-index: 1; }
+
+  .person.active { z-index: 50 !important; }
+
+  .face-box {
+    position: absolute;
+    border: 2.5px solid var(--primary);
+    border-radius: 3px;
+    box-shadow: 0 0 14px rgba(0,136,204,0.6), inset 0 0 10px rgba(0,136,204,0.15);
+    opacity: 0;
+    transform: scale(1.12);
+    transform-origin: center;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+  }
+
+  .person.active .face-box {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .desc-box {
+    position: absolute;
+    background: var(--card-bg);
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    padding: 12px 18px;
+    box-shadow: 0 14px 30px rgba(0,136,204,0.28), 0 0 0 1px rgba(0,136,204,0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    width: max-content;
+    z-index: 2;
+  }
+
+  .person.active .desc-box {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .connector {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .connector polyline {
+    fill: none;
+    stroke: var(--primary-light);
+    stroke-width: 2;
+  }
+
+  .connector circle {
+    fill: var(--primary-light);
+  }
+
+  .connector {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .person.active .connector {
+    opacity: 1;
+  }
+
+  .desc-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding-bottom: 4px;
+    margin-bottom: 7px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    font-size: 0.92rem;
+    white-space: nowrap;
+  }
+
+  .desc-row:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .desc-row .label {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    min-width: 60px;
+    color: var(--primary-light);
+  }
+
+  .desc-row .value {
+    font-weight: 400;
+    color: var(--ink);
+  }
+
+  @media (max-width: 960px) {
+    .stage { transform: scale(0.8); transform-origin: top center; }
+  }
+
+  @media (max-width: 620px) {
+    .stage { transform: scale(0.48); transform-origin: top center; height: 460px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Ark<span>Engine</span></h1>
+  <p>Meet Our Team — tap a photo</p>
+</header>
+
+<div class="stage" id="stage">
+
+  <div class="person" id="p-meganath" data-box="37,8,34,34" data-side="right">
+    <img src="2.png" alt="Meganath">
+    <div class="face-box"></div>
+    <svg class="connector"><polyline></polyline><circle r="3.5"></circle></svg>
+    <div class="desc-box">
+      <div class="desc-row"><span class="label">Name</span><span>:</span><span class="value">Meganath</span></div>
+      <div class="desc-row"><span class="label">Age</span><span>:</span><span class="value">22</span></div>
+      <div class="desc-row"><span class="label">Role</span><span>:</span><span class="value">COO</span></div>
+      <div class="desc-row"><span class="label">Degree</span><span>:</span><span class="value">M.Sc Software Systems</span></div>
+    </div>
+  </div>
+
+  <div class="person front" id="p-suriya" data-box="35,6,30,31" data-side="right">
+    <img src="1.png" alt="Suriya">
+    <div class="face-box"></div>
+    <svg class="connector"><polyline></polyline><circle r="3.5"></circle></svg>
+    <div class="desc-box">
+      <div class="desc-row"><span class="label">Name</span><span>:</span><span class="value">Suriya L V</span></div>
+      <div class="desc-row"><span class="label">Age</span><span>:</span><span class="value">22</span></div>
+      <div class="desc-row"><span class="label">Role</span><span>:</span><span class="value">Founder &amp; CEO</span></div>
+      <div class="desc-row"><span class="label">Degree</span><span>:</span><span class="value">M.Sc Software</span></div>
+    </div>
+  </div>
+
+  <div class="person" id="p-dharani" data-box="36,9,32,33" data-side="right">
+    <img src="3.png" alt="Dharani Dharan">
+    <div class="face-box"></div>
+    <svg class="connector"><polyline></polyline><circle r="3.5"></circle></svg>
+    <div class="desc-box">
+      <div class="desc-row"><span class="label">Name</span><span>:</span><span class="value">Dharani Dharan</span></div>
+      <div class="desc-row"><span class="label">Age</span><span>:</span><span class="value">22</span></div>
+      <div class="desc-row"><span class="label">Role</span><span>:</span><span class="value">CFO</span></div>
+      <div class="desc-row"><span class="label">Degree</span><span>:</span><span class="value">M.Sc Software</span></div>
+    </div>
+  </div>
+
+  <div class="person" id="p-kabhilan" data-box="35,7,29,32" data-side="left">
+    <img src="4.png" alt="Kabhilan">
+    <div class="face-box"></div>
+    <svg class="connector"><polyline></polyline><circle r="3.5"></circle></svg>
+    <div class="desc-box">
+      <div class="desc-row"><span class="label">Name</span><span>:</span><span class="value">Kabhilan</span></div>
+      <div class="desc-row"><span class="label">Age</span><span>:</span><span class="value">22</span></div>
+      <div class="desc-row"><span class="label">Role</span><span>:</span><span class="value">CTO</span></div>
+      <div class="desc-row"><span class="label">Degree</span><span>:</span><span class="value">M.Sc Software Systems</span></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const stage = document.getElementById('stage');
+  const people = Array.from(document.querySelectorAll('.person'));
+
+  const PW = 280, PH = 350; // person box size in px (matches CSS width + its 1215:1519 aspect ratio)
+
+  const FACE_PAD = 5; // grow every face-box by this many px on each side
+
+  people.forEach(p => {
+    const box = p.querySelector('.face-box');
+    const [leftPct, topPct, widthPct, heightPct] = p.dataset.box.split(',').map(Number);
+
+    const rawLeft = leftPct / 100 * PW;
+    const rawTop = topPct / 100 * PH;
+    const rawRight = rawLeft + (widthPct / 100 * PW);
+    const rawBottom = rawTop + (heightPct / 100 * PH);
+
+    const fbLeft = rawLeft - FACE_PAD;
+    const fbTop = rawTop - FACE_PAD;
+    const fbRight = rawRight + FACE_PAD;
+    const fbBottom = rawBottom + FACE_PAD;
+
+    box.style.left = fbLeft + 'px';
+    box.style.top = fbTop + 'px';
+    box.style.width = (fbRight - fbLeft) + 'px';
+    box.style.height = (fbBottom - fbTop) + 'px';
+
+    const side = p.dataset.side;
+    const diag = 34;
+    const horiz = 34;
+    const gap = -3;
+
+    const startY = fbTop;
+    const bendY = startY - diag;
+    let startX, bendX, endX;
+
+    const descBox = p.querySelector('.desc-box');
+
+    if (side === 'right') {
+      startX = fbRight;
+      bendX = startX + diag;
+      endX = bendX + horiz;
+      descBox.style.left = endX + 'px';
+    } else {
+      startX = fbLeft;
+      bendX = startX - diag;
+      endX = bendX - horiz;
+      descBox.style.right = (PW - endX) + 'px';
+    }
+    descBox.style.bottom = (PH - bendY + gap) + 'px';
+
+    const svg = p.querySelector('.connector');
+    svg.setAttribute('width', PW);
+    svg.setAttribute('height', PH);
+    svg.querySelector('polyline').setAttribute('points', `${startX},${startY} ${bendX},${bendY} ${endX},${bendY}`);
+    const dot = svg.querySelector('circle');
+    dot.setAttribute('cx', startX);
+    dot.setAttribute('cy', startY);
+  });
+
+  let activeId = null;
+
+  function closeAll() {
+    people.forEach(p => p.classList.remove('active', 'front'));
+    document.getElementById('p-suriya').classList.add('front');
+    activeId = null;
+  }
+
+  function activate(person) {
+    if (activeId === person.id) { closeAll(); return; }
+    activeId = person.id;
+    people.forEach(p => p.classList.remove('active', 'front'));
+    person.classList.add('active', 'front');
+  }
+
+  people.forEach(p => {
+    p.addEventListener('click', (e) => {
+      e.stopPropagation();
+      activate(p);
+    });
+  });
+
+  stage.addEventListener('click', () => closeAll());
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+</script>
+
+</body>
+</html>
