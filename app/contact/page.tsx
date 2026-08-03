@@ -1,6 +1,8 @@
 "use client";
 
 import { useForm } from "react-hook-form";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Mail, Phone, MapPin, ArrowRight, CheckCircle, Clock } from "lucide-react";
@@ -35,13 +37,27 @@ export default function ContactPage() {
     },
   });
 
-  const onSubmit = async () => {
+  const onSubmit = async (data: ContactFormValues) => {
     setLoading(true);
-    // Simulate API request
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setLoading(false);
-    setIsSubmitted(true);
-    reset();
+    try {
+      // 1. Store in Firebase Firestore (Free Tier)
+      await addDoc(collection(db, "contacts"), {
+        name: data.name,
+        email: data.email,
+        company: data.company || "",
+        projectType: data.projectType,
+        inquiryMessage: data.message,
+        createdAt: serverTimestamp(),
+      });
+
+      setIsSubmitted(true);
+      reset();
+    } catch (error) {
+      console.error("Error submitting form: ", error);
+      alert("There was an error sending your message. Please try again or email us directly.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

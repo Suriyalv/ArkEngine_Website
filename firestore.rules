@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /contacts/{document=**} {
+      // Anyone can create a new contact inquiry
+      allow create: if true;
+      // No one can read, update, or delete existing inquiries from the client
+      allow read, update, delete: if false; 
+    }
+  }
+}
