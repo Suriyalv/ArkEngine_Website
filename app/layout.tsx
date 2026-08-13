@@ -17,11 +17,11 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "ArkEngine Technologies — Intelligent Digital Products",
-    template: "%s | ArkEngine Technologies",
+    default: "Ark Engine Technologies (ArkEngine) — Intelligent Digital Products",
+    template: "%s | Ark Engine Technologies",
   },
   description:
-    "ArkEngine Technologies builds cutting-edge SaaS products, custom software, AI/ML solutions, and cloud applications for forward-thinking businesses. Transform your ideas into intelligent digital products.",
+    "Ark Engine (ArkEngine) Technologies is an India-based startup crafting high-quality custom software, end-to-end SaaS products, AI/ML solutions, and premium web experiences. We build intelligent digital products that transform how businesses operate at scale.",
   keywords: [
     "AI solutions",
     "machine learning",
@@ -33,31 +33,34 @@ export const metadata: Metadata = {
     "generative AI",
     "LLM applications",
     "ArkEngine Technologies",
+    "Ark Engine",
+    "Ark Engine Technologies",
+    "Arkengine",
   ],
-  authors: [{ name: "ArkEngine Technologies" }],
-  creator: "ArkEngine Technologies",
+  authors: [{ name: "Ark Engine Technologies" }],
+  creator: "Ark Engine Technologies",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://arkengine.com",
-    siteName: "ArkEngine Technologies",
-    title: "ArkEngine Technologies — Intelligent Digital Products",
+    siteName: "Ark Engine Technologies",
+    title: "Ark Engine Technologies (ArkEngine) — Intelligent Digital Products",
     description:
-      "Building intelligent digital products for tomorrow. SaaS, AI, ML, and custom software solutions.",
+      "An India-based startup crafting high-quality custom software, SaaS products, and AI solutions. We build intelligent digital products that transform how businesses operate at scale.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "ArkEngine Technologies",
+        alt: "Ark Engine Technologies",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ArkEngine Technologies — Intelligent Digital Products",
+    title: "Ark Engine Technologies (ArkEngine) — Intelligent Digital Products",
     description:
-      "Building intelligent digital products for tomorrow.",
+      "An India-based startup crafting high-quality custom software, SaaS products, and AI solutions.",
     images: ["/og-image.png"],
     creator: "@arkengine",
   },
@@ -91,15 +94,17 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: "ArkEngine Technologies",
+              name: "Ark Engine Technologies (ArkEngine)",
+              alternateName: ["ArkEngine", "Ark Engine", "Arkengine Technologies"],
               url: "https://arkengine.com",
               logo: "https://arkengine.com/logo.png",
               description:
-                "ArkEngine Technologies builds cutting-edge SaaS products, custom software, AI/ML solutions, and cloud applications.",
+                "Ark Engine Technologies is an India-based startup crafting high-quality custom software, end-to-end SaaS products, AI/ML solutions, and premium web experiences.",
               sameAs: [
-                "https://twitter.com/arkengine",
-                "https://linkedin.com/company/arkengine",
-                "https://github.com/arkengine",
+                "https://x.com/Arkenginetechno",
+                "https://www.linkedin.com/in/arkengine/",
+                "https://github.com/arkengine-technologies",
+                "https://www.instagram.com/arkenginetechnologies?igsh=djZ0aTdwZmFhcnk2",
               ],
               contactPoint: {
                 "@type": "ContactPoint",
