@@ -87,11 +87,11 @@ const ROLE_CONFIGS: Record<string, RoleConfig> = {
     prefix: "",
     segments: [
       { char: "C", expansion: "hief" },
-      { char: "T", expansion: "echnical" },
+      { char: "T", expansion: "echnology" },
       { char: "O", expansion: "fficer" },
     ],
     short: "CTO",
-    fullTitle: "Chief Technical Officer",
+    fullTitle: "Chief Technology Officer",
   },
 };
 
