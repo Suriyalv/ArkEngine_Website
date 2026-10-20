@@ -112,7 +112,7 @@ function AnimatedRoleBadge({
     if (isPersonActive) {
       const timer = setTimeout(() => {
         setAutoExpanded(true);
-      }, 150);
+      }, 2500);
       return () => clearTimeout(timer);
     } else {
       setAutoExpanded(false);
@@ -142,7 +142,7 @@ function AnimatedRoleBadge({
             <span
               key={i}
               className="ts-acronym-segment"
-              style={{ "--seg-delay": `${i * 0.08}s` } as React.CSSProperties}
+              style={{ "--seg-delay": `${i * 0.28}s` } as React.CSSProperties}
             >
               <span className="ts-acronym-char">{seg.char}</span>
               <span className="ts-acronym-reveal">
@@ -517,40 +517,31 @@ export default function TeamShowcase() {
           color: var(--text-primary);
         }
 
-        /* ================= Glassy Animated Role Badge ================= */
+        /* ================= Seamless Animated Role ================= */
         .ts-role-badge {
           display: inline-flex;
           align-items: center;
-          background: rgba(255, 255, 255, 0.05);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          padding: 3px 12px;
-          border-radius: 9999px;
+          background: transparent;
+          border: none;
+          outline: none;
+          padding: 0;
           cursor: pointer;
           user-select: none;
           position: relative;
-          box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.18),
-                      0 4px 16px rgba(0, 0, 0, 0.12),
-                      0 0 12px rgba(0, 136, 204, 0.08);
-          transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: none;
         }
 
         .ts-role-badge:hover {
-          background: rgba(255, 255, 255, 0.08);
-          border-color: rgba(56, 189, 248, 0.35);
-          box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25),
-                      0 6px 20px rgba(0, 136, 204, 0.2),
-                      0 0 20px rgba(56, 189, 248, 0.25);
-          transform: translateY(-1px);
+          background: transparent;
+          border-color: transparent;
+          box-shadow: none;
+          transform: none;
         }
 
         .ts-role-badge.ts-role-expanded {
-          background: rgba(0, 136, 204, 0.12);
-          border-color: rgba(56, 189, 248, 0.45);
-          box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25),
-                      0 8px 24px rgba(0, 136, 204, 0.22),
-                      0 0 24px rgba(56, 189, 248, 0.25);
+          background: transparent;
+          border-color: transparent;
+          box-shadow: none;
         }
 
         .ts-role-content {
@@ -594,7 +585,7 @@ export default function TeamShowcase() {
         .ts-acronym-reveal {
           display: inline-grid;
           grid-template-columns: 0fr;
-          transition: grid-template-columns 0.52s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: grid-template-columns 0.42s cubic-bezier(0.25, 1, 0.5, 1);
           transition-delay: var(--seg-delay, 0s);
           vertical-align: baseline;
         }
@@ -609,12 +600,12 @@ export default function TeamShowcase() {
           white-space: nowrap;
           display: inline-block;
           opacity: 0;
-          transform: translateX(-4px);
+          transform: translateX(-3px);
           color: var(--text-primary);
-          font-weight: 600;
+          font-weight: 500;
           font-size: 0.88rem;
           letter-spacing: -0.2px;
-          transition: opacity 0.4s ease, transform 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: opacity 0.35s ease, transform 0.42s cubic-bezier(0.25, 1, 0.5, 1);
           transition-delay: var(--seg-delay, 0s);
         }
 
@@ -626,7 +617,8 @@ export default function TeamShowcase() {
         .ts-acronym-space {
           display: inline-block;
           width: 0;
-          transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+          transition-delay: var(--seg-delay, 0s);
         }
 
         .ts-role-expanded .ts-acronym-space {
