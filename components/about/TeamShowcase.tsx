@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 type Side = "left" | "right";
@@ -8,9 +8,8 @@ type Side = "left" | "right";
 interface Founder {
   id: string;
   name: string;
-  age: number;
   role: string;
-  degree: string;
+  techDomain: string;
   img: string;
   imgWidth: number;
   imgHeight: number;
@@ -21,17 +20,166 @@ interface Founder {
   isDefaultFront?: boolean;
 }
 
+interface AcronymSegment {
+  char: string;
+  expansion: string;
+}
+
+interface RoleConfig {
+  prefix?: string;
+  segments: AcronymSegment[];
+  short: string;
+  fullTitle: string;
+}
+
+const ROLE_CONFIGS: Record<string, RoleConfig> = {
+  jaghadeep: {
+    prefix: "",
+    segments: [
+      { char: "C", expansion: "hief" },
+      { char: "D", expansion: "ata" },
+      { char: "O", expansion: "fficer" },
+    ],
+    short: "CDO",
+    fullTitle: "Chief Data Officer",
+  },
+  meganath: {
+    prefix: "",
+    segments: [
+      { char: "C", expansion: "hief" },
+      { char: "O", expansion: "perating" },
+      { char: "O", expansion: "fficer" },
+    ],
+    short: "COO",
+    fullTitle: "Chief Operating Officer",
+  },
+  suriya: {
+    prefix: "Founder & ",
+    segments: [
+      { char: "C", expansion: "hief" },
+      { char: "E", expansion: "xecutive" },
+      { char: "O", expansion: "fficer" },
+    ],
+    short: "Founder & CEO",
+    fullTitle: "Founder & Chief Executive Officer",
+  },
+  dharani: {
+    prefix: "",
+    segments: [
+      { char: "C", expansion: "hief" },
+      { char: "F", expansion: "inancial" },
+      { char: "O", expansion: "fficer" },
+    ],
+    short: "CFO",
+    fullTitle: "Chief Financial Officer",
+  },
+  kabhilan: {
+    prefix: "",
+    segments: [
+      { char: "C", expansion: "hief" },
+      { char: "I", expansion: "nformation" },
+      { char: "O", expansion: "fficer" },
+    ],
+    short: "CIO",
+    fullTitle: "Chief Information Officer",
+  },
+  madhan: {
+    prefix: "",
+    segments: [
+      { char: "C", expansion: "hief" },
+      { char: "T", expansion: "echnical" },
+      { char: "O", expansion: "fficer" },
+    ],
+    short: "CTO",
+    fullTitle: "Chief Technical Officer",
+  },
+};
+
+function AnimatedRoleBadge({
+  founderId,
+  isPersonActive,
+  isMobile,
+}: {
+  founderId: string;
+  isPersonActive?: boolean;
+  isMobile?: boolean;
+}) {
+  const [isManualExpanded, setIsManualExpanded] = useState(false);
+  const [autoExpanded, setAutoExpanded] = useState(false);
+  const cfg = ROLE_CONFIGS[founderId];
+
+  useEffect(() => {
+    if (isPersonActive) {
+      const timer = setTimeout(() => {
+        setAutoExpanded(true);
+      }, 150);
+      return () => clearTimeout(timer);
+    } else {
+      setAutoExpanded(false);
+      setIsManualExpanded(false);
+    }
+  }, [isPersonActive]);
+
+  if (!cfg) return null;
+
+  const isExpanded = isMobile
+    ? isManualExpanded
+    : (isPersonActive && autoExpanded) || isManualExpanded;
+
+  return (
+    <div
+      className={`ts-role-badge ${isExpanded ? "ts-role-expanded" : ""} ${isMobile ? "ts-role-mobile" : ""}`}
+      onClick={(e) => {
+        e.stopPropagation();
+        setIsManualExpanded((prev) => !prev);
+      }}
+      title={isExpanded ? "Click to collapse" : "Click to expand full role"}
+    >
+      <div className="ts-role-content">
+        {cfg.prefix && <span className="ts-role-prefix">{cfg.prefix}</span>}
+        <span className="ts-acronym-container">
+          {cfg.segments.map((seg, i) => (
+            <span
+              key={i}
+              className="ts-acronym-segment"
+              style={{ "--seg-delay": `${i * 0.08}s` } as React.CSSProperties}
+            >
+              <span className="ts-acronym-char">{seg.char}</span>
+              <span className="ts-acronym-reveal">
+                <span className="ts-acronym-expansion">{seg.expansion}</span>
+              </span>
+              {i < cfg.segments.length - 1 && <span className="ts-acronym-space" />}
+            </span>
+          ))}
+        </span>
+      </div>
+    </div>
+  );
+}
+
 const FOUNDERS: Founder[] = [
+  {
+    id: "jaghadeep",
+    name: "Jaghadeep S",
+    role: "CDO",
+    techDomain: "UI/UX & Data Science",
+    img: "/images/team/Jaghadeep.png",
+    imgWidth: 1080,
+    imgHeight: 1350,
+    left: 0,
+    zIndex: 1,
+    side: "right",
+    box: [35, 9, 29, 32],
+  },
   {
     id: "meganath",
     name: "Meganath V",
-    age: 22,
     role: "COO",
-    degree: "M.Sc Software Systems",
+    techDomain: "Software Development",
     img: "/images/team/meganath.png",
     imgWidth: 1215,
     imgHeight: 1519,
-    left: 40,
+    left: 172,
     zIndex: 1,
     side: "right",
     box: [37, 8, 34, 34],
@@ -39,13 +187,12 @@ const FOUNDERS: Founder[] = [
   {
     id: "suriya",
     name: "Suriya L V",
-    age: 22,
     role: "Founder & CEO",
-    degree: "M.Sc Software",
+    techDomain: "Gen AI, ML & DL",
     img: "/images/team/suriya.png",
     imgWidth: 1215,
     imgHeight: 1519,
-    left: 228,
+    left: 344,
     zIndex: 3,
     side: "right",
     box: [35, 6, 30, 31],
@@ -53,14 +200,13 @@ const FOUNDERS: Founder[] = [
   },
   {
     id: "dharani",
-    name: "Dharani Dharan",
-    age: 22,
+    name: "Dharani Dharan P",
     role: "CFO",
-    degree: "M.Sc Software",
+    techDomain: "Application Development",
     img: "/images/team/dharani.png",
     imgWidth: 1215,
     imgHeight: 1519,
-    left: 416,
+    left: 516,
     zIndex: 2,
     side: "right",
     box: [36, 9, 32, 33],
@@ -68,16 +214,28 @@ const FOUNDERS: Founder[] = [
   {
     id: "kabhilan",
     name: "Kabhilan V S",
-    age: 22,
     role: "CIO",
-    degree: "M.Sc Software Systems",
+    techDomain: "UI/UX and Full Stack Development",
     img: "/images/team/kabhilan.png",
     imgWidth: 1080,
     imgHeight: 1350,
-    left: 604,
+    left: 688,
     zIndex: 1,
     side: "left",
     box: [35, 7, 29, 32],
+  },
+  {
+    id: "madhan",
+    name: "Madhan P",
+    role: "CTO",
+    techDomain: "Software Development & Cyber Security",
+    img: "/images/team/Madhan.png",
+    imgWidth: 1080,
+    imgHeight: 1350,
+    left: 860,
+    zIndex: 0,
+    side: "left",
+    box: [35, 10, 30, 33],
   },
 ];
 
@@ -190,19 +348,16 @@ export default function TeamShowcase() {
                   <span className="ts-value">{f.name}</span>
                 </div>
                 <div className="ts-desc-row">
-                  <span className="ts-label">Age</span>
-                  <span>:</span>
-                  <span className="ts-value">{f.age}</span>
-                </div>
-                <div className="ts-desc-row">
                   <span className="ts-label">Role</span>
                   <span>:</span>
-                  <span className="ts-value">{f.role}</span>
+                  <div className="ts-value" style={{ display: "flex", alignItems: "center" }}>
+                    <AnimatedRoleBadge founderId={f.id} isPersonActive={isActive} />
+                  </div>
                 </div>
                 <div className="ts-desc-row">
-                  <span className="ts-label">Degree</span>
+                  <span className="ts-label">Tech Domain</span>
                   <span>:</span>
-                  <span className="ts-value">{f.degree}</span>
+                  <span className="ts-value">{f.techDomain}</span>
                 </div>
               </div>
             </div>
@@ -224,8 +379,10 @@ export default function TeamShowcase() {
               />
             </div>
             <h3 className="ts-mobile-name">{f.name}</h3>
-            <p className="ts-mobile-role">{f.role}</p>
-            <p className="ts-mobile-degree">{f.degree}</p>
+            <div className="ts-mobile-role-wrap">
+              <AnimatedRoleBadge founderId={f.id} isMobile={true} />
+            </div>
+            <p className="ts-mobile-degree">{f.techDomain}</p>
           </div>
         ))}
       </div>
@@ -239,7 +396,7 @@ export default function TeamShowcase() {
 
         .ts-stage {
           position: relative;
-          width: ${928}px;
+          width: ${1140}px;
           max-width: 100%;
           height: ${PH + 110}px;
         }
@@ -282,16 +439,20 @@ export default function TeamShowcase() {
         .ts-desc-box {
           position: absolute;
           background: var(--bg-card);
-          backdrop-filter: blur(12px);
-          border: 2px solid var(--primary);
-          border-radius: 8px;
-          padding: 12px 18px;
-          box-shadow: 0 14px 30px rgba(0,136,204,0.28), 0 0 0 1px rgba(0,136,204,0.15);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border: 1.5px solid rgba(0, 136, 204, 0.35);
+          border-radius: 12px;
+          padding: 14px 20px;
+          box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3), 0 0 24px rgba(0, 136, 204, 0.15);
           opacity: 0;
           visibility: hidden;
-          transform: translateY(6px);
-          transition: opacity 0.3s ease, transform 0.3s ease;
+          transform: translateY(8px) scale(0.97);
+          transition: opacity 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+                      transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
           pointer-events: none;
+          min-width: 310px;
+          max-width: 440px;
           width: max-content;
           z-index: 2;
         }
@@ -299,7 +460,8 @@ export default function TeamShowcase() {
         .ts-person.ts-active .ts-desc-box {
           opacity: 1;
           visibility: visible;
-          transform: translateY(0);
+          transform: translateY(0) scale(1);
+          pointer-events: auto;
         }
 
         .ts-connector {
@@ -328,9 +490,9 @@ export default function TeamShowcase() {
 
         .ts-desc-row {
           display: flex;
-          align-items: baseline;
+          align-items: center;
           gap: 8px;
-          padding-bottom: 4px;
+          padding-bottom: 5px;
           margin-bottom: 7px;
           border-bottom: 1px solid var(--border);
           font-size: 0.92rem;
@@ -346,13 +508,139 @@ export default function TeamShowcase() {
         .ts-label {
           font-weight: 600;
           letter-spacing: 0.5px;
-          min-width: 60px;
+          min-width: 92px;
           color: var(--primary-light);
         }
 
         .ts-value {
           font-weight: 400;
           color: var(--text-primary);
+        }
+
+        /* ================= Glassy Animated Role Badge ================= */
+        .ts-role-badge {
+          display: inline-flex;
+          align-items: center;
+          background: rgba(255, 255, 255, 0.05);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          padding: 3px 12px;
+          border-radius: 9999px;
+          cursor: pointer;
+          user-select: none;
+          position: relative;
+          box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.18),
+                      0 4px 16px rgba(0, 0, 0, 0.12),
+                      0 0 12px rgba(0, 136, 204, 0.08);
+          transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .ts-role-badge:hover {
+          background: rgba(255, 255, 255, 0.08);
+          border-color: rgba(56, 189, 248, 0.35);
+          box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25),
+                      0 6px 20px rgba(0, 136, 204, 0.2),
+                      0 0 20px rgba(56, 189, 248, 0.25);
+          transform: translateY(-1px);
+        }
+
+        .ts-role-badge.ts-role-expanded {
+          background: rgba(0, 136, 204, 0.12);
+          border-color: rgba(56, 189, 248, 0.45);
+          box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25),
+                      0 8px 24px rgba(0, 136, 204, 0.22),
+                      0 0 24px rgba(56, 189, 248, 0.25);
+        }
+
+        .ts-role-content {
+          display: inline-flex;
+          align-items: baseline;
+          white-space: nowrap;
+        }
+
+        .ts-role-prefix {
+          color: var(--text-secondary);
+          font-weight: 500;
+          font-size: 0.86rem;
+          margin-right: 4px;
+          letter-spacing: -0.2px;
+        }
+
+        .ts-acronym-container {
+          display: inline-flex;
+          align-items: baseline;
+        }
+
+        .ts-acronym-segment {
+          display: inline-flex;
+          align-items: baseline;
+        }
+
+        .ts-acronym-char {
+          color: #38bdf8;
+          font-weight: 800;
+          font-size: 0.94rem;
+          letter-spacing: 0.5px;
+          text-shadow: 0 0 10px rgba(56, 189, 248, 0.45);
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .ts-role-expanded .ts-acronym-char {
+          color: #38bdf8;
+          text-shadow: 0 0 14px rgba(56, 189, 248, 0.7);
+        }
+
+        .ts-acronym-reveal {
+          display: inline-grid;
+          grid-template-columns: 0fr;
+          transition: grid-template-columns 0.52s cubic-bezier(0.16, 1, 0.3, 1);
+          transition-delay: var(--seg-delay, 0s);
+          vertical-align: baseline;
+        }
+
+        .ts-role-expanded .ts-acronym-reveal {
+          grid-template-columns: 1fr;
+        }
+
+        .ts-acronym-expansion {
+          min-width: 0;
+          overflow: hidden;
+          white-space: nowrap;
+          display: inline-block;
+          opacity: 0;
+          transform: translateX(-4px);
+          color: var(--text-primary);
+          font-weight: 600;
+          font-size: 0.88rem;
+          letter-spacing: -0.2px;
+          transition: opacity 0.4s ease, transform 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+          transition-delay: var(--seg-delay, 0s);
+        }
+
+        .ts-role-expanded .ts-acronym-expansion {
+          opacity: 1;
+          transform: translateX(0);
+        }
+
+        .ts-acronym-space {
+          display: inline-block;
+          width: 0;
+          transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .ts-role-expanded .ts-acronym-space {
+          width: 5px;
+        }
+
+        .ts-mobile-role-wrap {
+          display: flex;
+          justify-content: center;
+          margin: 4px 0 8px;
+        }
+
+        .ts-role-mobile {
+          margin: 0 auto;
         }
 
         .ts-hint {
@@ -363,8 +651,12 @@ export default function TeamShowcase() {
           color: var(--text-tertiary);
         }
 
-        @media (max-width: 960px) and (min-width: 769px) {
+        @media (max-width: 1199px) and (min-width: 961px) {
           .ts-stage { transform: scale(0.8); transform-origin: top center; }
+        }
+
+        @media (max-width: 960px) and (min-width: 769px) {
+          .ts-stage { transform: scale(0.6); transform-origin: top center; }
         }
 
         .ts-mobile-grid {
@@ -407,13 +699,6 @@ export default function TeamShowcase() {
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 4px;
-          }
-
-          .ts-mobile-role {
-            font-size: 0.8rem;
-            color: #0088cc;
-            font-weight: 600;
-            margin-bottom: 6px;
           }
 
           .ts-mobile-degree {

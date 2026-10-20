@@ -9,13 +9,7 @@ export const metadata: Metadata = {
     "Learn about ArkEngine Technologies — our story, mission, vision, values, and the world-class team behind every intelligent product we build.",
 };
 
-const team = [
-  { name: "Sarvesh N S", title: "Software Engineer", initials: "SN", bio: "Focused on data engineering and seamless database integrations." },
-  { name: "Syed Javid", title: "Software Engineer", initials: "SJ", bio: "Dedicated to building secure, robust, and scalable solutions." },
-  { name: "Jaghadeep S", title: "Software Engineer", initials: "JS", bio: "Frontend specialist with a keen eye for pixel-perfect designs." },
-  { name: "Dharshan P", title: "Chief Technology Officer", initials: "DP", bio: "Focuses on technology, research, and scientific or engineering issues related to product development." },
-  { name: "Deepak P", title: "Software Engineer", initials: "DP", bio: "Dedicated to building secure, robust, and scalable solutions." }
-];
+
 
 export default function AboutPage() {
   return (
@@ -114,7 +108,7 @@ export default function AboutPage() {
       </section>
 
       {/* Leadership */}
-      <section className="section" style={{ background: "var(--bg)" }}>
+      <section id="team" className="section" style={{ background: "var(--bg)" }}>
         <div className="container">
           <div style={{ textAlign: "center", marginBottom: "48px" }}>
             <div className="section-label">Leadership</div>
@@ -130,51 +124,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Team */}
-      <section className="section" style={{ background: "var(--bg-secondary)" }}>
-        <div className="container">
-          <div style={{ textAlign: "center", marginBottom: "64px" }}>
-            <div className="section-label">Engineering Team</div>
-            <h2 className="text-headline" style={{ marginBottom: "16px" }}>
-              The builders behind{" "}
-              <span className="gradient-text">every product</span>
-            </h2>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }} className="team-grid">
-            {team.map((member) => (
-              <div key={member.name} style={{
-                padding: "36px 28px",
-                textAlign: "center",
-                background: "var(--bg-card)",
-                borderRadius: "var(--radius-lg)",
-                border: "1px solid var(--border)",
-                boxShadow: "var(--shadow-sm)",
-                transition: "all 0.35s cubic-bezier(0.23, 1, 0.32, 1)",
-              }}>
-                <div style={{
-                  width: 80,
-                  height: 80,
-                  borderRadius: "50%",
-                  background: "linear-gradient(135deg, #0088cc, #33aadd)",
-                  border: "3px solid rgba(0,136,204,0.15)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  margin: "0 auto 16px",
-                  fontSize: "1.3rem",
-                  fontWeight: 700,
-                  color: "#ffffff",
-                }}>
-                  {member.initials}
-                </div>
-                <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "4px" }}>{member.name}</h3>
-                <p style={{ fontSize: "0.8rem", color: "#0088cc", fontWeight: 600, marginBottom: "12px" }}>{member.title}</p>
-                <p style={{ fontSize: "0.825rem", color: "var(--text-secondary)", lineHeight: 1.65 }}>{member.bio}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       {/* CTA */}
       <section className="section-sm" style={{ background: "linear-gradient(135deg, #0088cc 0%, #006699 100%)" }}>
