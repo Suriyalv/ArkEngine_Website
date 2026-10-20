@@ -112,7 +112,7 @@ function AnimatedRoleBadge({
     if (isPersonActive) {
       const timer = setTimeout(() => {
         setAutoExpanded(true);
-      }, 2500);
+      }, 2000);
       return () => clearTimeout(timer);
     } else {
       setAutoExpanded(false);
@@ -139,11 +139,7 @@ function AnimatedRoleBadge({
         {cfg.prefix && <span className="ts-role-prefix">{cfg.prefix}</span>}
         <span className="ts-acronym-container">
           {cfg.segments.map((seg, i) => (
-            <span
-              key={i}
-              className="ts-acronym-segment"
-              style={{ "--seg-delay": `${i * 0.28}s` } as React.CSSProperties}
-            >
+            <span key={i} className="ts-acronym-segment">
               <span className="ts-acronym-char">{seg.char}</span>
               <span className="ts-acronym-reveal">
                 <span className="ts-acronym-expansion">{seg.expansion}</span>
@@ -585,8 +581,7 @@ export default function TeamShowcase() {
         .ts-acronym-reveal {
           display: inline-grid;
           grid-template-columns: 0fr;
-          transition: grid-template-columns 0.42s cubic-bezier(0.25, 1, 0.5, 1);
-          transition-delay: var(--seg-delay, 0s);
+          transition: grid-template-columns 0.48s cubic-bezier(0.16, 1, 0.3, 1);
           vertical-align: baseline;
         }
 
@@ -600,13 +595,12 @@ export default function TeamShowcase() {
           white-space: nowrap;
           display: inline-block;
           opacity: 0;
-          transform: translateX(-3px);
+          transform: translateX(-4px);
           color: var(--text-primary);
           font-weight: 500;
           font-size: 0.88rem;
           letter-spacing: -0.2px;
-          transition: opacity 0.35s ease, transform 0.42s cubic-bezier(0.25, 1, 0.5, 1);
-          transition-delay: var(--seg-delay, 0s);
+          transition: opacity 0.38s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .ts-role-expanded .ts-acronym-expansion {
@@ -617,8 +611,7 @@ export default function TeamShowcase() {
         .ts-acronym-space {
           display: inline-block;
           width: 0;
-          transition: width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-          transition-delay: var(--seg-delay, 0s);
+          transition: width 0.42s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .ts-role-expanded .ts-acronym-space {
